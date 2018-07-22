@@ -88,7 +88,10 @@ func shoot():
 func land():
 	
 	if abs(linear_velocity.y) > ground_hit_velocity:
-		pass 
+		$Sprite.visible = false
+		$Explosion.visible = true
+		$FartSound.play()
+		$Explosion/AnimationPlayer.play('explode')
 	
 func _integrate_forces(state): #Screen Wrap
 
@@ -113,3 +116,8 @@ func _on_Ship_body_entered(body):
 		
 func _on_GunTimer_timeout():
 	canshoot = true
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	$Explosion.visible = false
+	$Sprite.visible = true
