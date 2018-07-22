@@ -1,7 +1,8 @@
 extends RigidBody2D
 
-signal shoot
+signal spawn_bullet
 signal fuel_changed
+signal dead
 
 export (int) var thrust = 5
 export (int) var max_speed = 80
@@ -16,6 +17,7 @@ export (int) var fuel_per_second
 export (PackedScene) var Bullet
 
 var canshoot = true
+var new_position = null
 
 func _ready():
 	fuel = max_fuel
@@ -82,7 +84,7 @@ func shoot():
 		canshoot = false
 		$GunTimer.start()
 		var dir = Vector2(0, -1).rotated($Turret.global_rotation)
-		emit_signal('shoot', Bullet, $Turret.global_position, dir)
+		emit_signal('spawn_bullet', Bullet, $Turret.global_position, dir)
 
 
 func land():
@@ -96,12 +98,16 @@ func land():
 func _integrate_forces(state): #Screen Wrap
 
 	var xform = state.get_transform()
-
+	
 	if xform.origin.x > get_viewport().size.x:
 		xform.origin.x = 0		
 
 	if xform.origin.x < 0:
 		xform.origin.x = get_viewport().size.x
+
+	if new_position:
+		xform.origin = new_position
+		new_position = null
 
 	state.set_transform(xform)
 	
@@ -119,5 +125,5 @@ func _on_GunTimer_timeout():
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	$Explosion.visible = false
-	$Sprite.visible = true
+	emit_signal("dead", Vector2(position.x, get_viewport().size.y - 50))
+	queue_free()

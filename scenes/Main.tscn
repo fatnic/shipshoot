@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/background.png" type="Texture" id=2]
-[ext_resource path="res://scenes/entities/Ship.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/images/grass-16.png" type="Texture" id=4]
-[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/images/grass-16.png" type="Texture" id=3]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -36,16 +35,7 @@ texture = ExtResource( 2 )
 stretch_mode = 0
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Ship" parent="." index="1" instance=ExtResource( 3 )]
-
-position = Vector2( 203.005, 687.581 )
-bounce = 0.3
-gravity_scale = 1.0
-thrust = 35
-max_speed = 450
-fuel_per_second = 2
-
-[node name="Ground" type="StaticBody2D" parent="." index="2"]
+[node name="Ground" type="StaticBody2D" parent="." index="1"]
 
 editor/display_folded = true
 position = Vector2( 640.092, 712.159 )
@@ -60,7 +50,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="Ground" index="0"]
 
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 1280, 16 )
 _sections_unfolded = [ "Material", "Region", "Transform", "Visibility" ]
@@ -69,7 +59,7 @@ _sections_unfolded = [ "Material", "Region", "Transform", "Visibility" ]
 
 shape = SubResource( 1 )
 
-[node name="CeilingArea" type="StaticBody2D" parent="." index="3"]
+[node name="CeilingArea" type="StaticBody2D" parent="." index="2"]
 
 editor/display_folded = true
 input_pickable = false
@@ -85,10 +75,6 @@ bounce = 0.0
 position = Vector2( 640.092, -7.841 )
 shape = SubResource( 1 )
 
-[node name="HUD" parent="." index="4" instance=ExtResource( 5 )]
-
-[connection signal="fuel_changed" from="Ship" to="HUD" method="update_fuelbar"]
-
-[connection signal="shoot" from="Ship" to="." method="_on_Ship_shoot"]
+[node name="HUD" parent="." index="3" instance=ExtResource( 4 )]
 
 
