@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/Main.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/background.png" type="Texture" id=2]
+[ext_resource path="res://scenes/entities/Ship.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/images/grass-16.png" type="Texture" id=4]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 680.263, 8 )
+
+[node name="Main" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="." index="0"]
+
+modulate = Color( 0.296875, 0.296875, 0.296875, 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1856.0
+margin_bottom = 1016.0
+rect_scale = Vector2( 0.7, 0.7 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.0
+texture = ExtResource( 2 )
+stretch_mode = 0
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Ship" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 203.005, 687.581 )
+bounce = 0.3
+gravity_scale = 1.0
+thrust = 35
+max_speed = 450
+fuel_per_second = 2
+
+[node name="Ground" type="StaticBody2D" parent="." index="2"]
+
+editor/display_folded = true
+position = Vector2( 640.092, 712.159 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Ground" index="0"]
+
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1280, 16 )
+_sections_unfolded = [ "Material", "Region", "Transform", "Visibility" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" index="1"]
+
+shape = SubResource( 1 )
+
+[node name="CeilingArea" type="StaticBody2D" parent="." index="3"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 0.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingArea" index="0"]
+
+position = Vector2( 640.092, -7.841 )
+shape = SubResource( 1 )
+
+[node name="HUD" parent="." index="4" instance=ExtResource( 5 )]
+
+[connection signal="fuel_changed" from="Ship" to="HUD" method="update_fuelbar"]
+
+[connection signal="shoot" from="Ship" to="." method="_on_Ship_shoot"]
+
+
