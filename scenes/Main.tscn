@@ -10,11 +10,11 @@
 custom_solver_bias = 0.0
 extents = Vector2( 680.263, 8 )
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
-[node name="TextureRect" type="TextureRect" parent="." index="0"]
+[node name="Background" type="TextureRect" parent="." index="0"]
 
 modulate = Color( 0.296875, 0.296875, 0.296875, 1 )
 anchor_left = 0.0
@@ -39,6 +39,7 @@ _sections_unfolded = [ "Visibility" ]
 
 editor/display_folded = true
 position = Vector2( 640.092, 712.159 )
+z_index = 100
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -46,7 +47,7 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Sprite" type="Sprite" parent="Ground" index="0"]
 

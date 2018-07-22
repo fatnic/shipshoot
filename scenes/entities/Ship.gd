@@ -9,10 +9,11 @@ export (int) var max_speed = 80
 export (int) var rotation_speed = 2
 
 export (int) var ground_hit_velocity = 40
+export (int) var max_land_angle = 30
 
 export (int) var max_fuel = 100
-export (int) var fuel
-export (int) var fuel_per_second
+export (int) var fuel = 100
+export (int) var fuel_per_second = 10
 
 export (PackedScene) var Bullet
 
@@ -56,8 +57,8 @@ func _physics_process(delta):
 		
 	if Input.is_key_pressed(KEY_F):
 		refuel(20)
-		
-		
+	
+			
 func refuel(amount):
 	fuel = clamp(fuel + amount, fuel + amount, max_fuel)
 	emit_signal('fuel_changed', fuel * 100 / max_fuel)
@@ -79,7 +80,9 @@ func thrust(delta):
 			$RocketSound.play()
 		$Flames.emitting = true
 			
+		
 func shoot():
+	
 	if canshoot:
 		canshoot = false
 		$GunTimer.start()
@@ -90,12 +93,22 @@ func shoot():
 func land():
 	
 	if abs(linear_velocity.y) > ground_hit_velocity:
-		$Sprite.visible = false
-		$Explosion.visible = true
-		$FartSound.play()
-		$Explosion/AnimationPlayer.play('explode')
+		explode()
+
+	var angle_from_vertical = Vector2(-sin(rotation), -cos(rotation)).angle_to(Vector2(0, -1))
+	if abs(angle_from_vertical) > deg2rad(max_land_angle):
+		explode()	
 	
-func _integrate_forces(state): #Screen Wrap
+func explode():
+	linear_velocity = Vector2(0, 0)
+	$CollisionShape2D.disabled = true
+	$Sprite.visible = false
+	$Flames.visible = false
+	$ExplosionSound.play()
+	$Explosion.visible = true
+	$Explosion/AnimationPlayer.play('explode')
+	
+func _integrate_forces(state):
 
 	var xform = state.get_transform()
 	
@@ -115,7 +128,7 @@ func _integrate_forces(state): #Screen Wrap
 func _on_Ship_body_entered(body):
 	
 	var body_name = body.get_name()
-
+	
 	if body_name == "Ground":
 		land()	
 

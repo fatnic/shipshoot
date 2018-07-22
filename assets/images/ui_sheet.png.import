@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/13498029921187851476Blank Green Bar.svg.hi.png-cb4ffc7f40f7c9c960ccbea55446faba.stex"
+path="res://.import/ui_sheet.png-0beecac3710667cd70d25d0ee7ce71c7.stex"
 
 [deps]
 
-source_file="res://assets/images/13498029921187851476Blank Green Bar.svg.hi.png"
-dest_files=[ "res://.import/13498029921187851476Blank Green Bar.svg.hi.png-cb4ffc7f40f7c9c960ccbea55446faba.stex" ]
+source_file="res://assets/images/ui_sheet.png"
+dest_files=[ "res://.import/ui_sheet.png-0beecac3710667cd70d25d0ee7ce71c7.stex" ]
 
 [params]
 
