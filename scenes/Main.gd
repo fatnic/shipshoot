@@ -17,5 +17,5 @@ func spawn_ship(_position):
 	s.connect("dead", self, "spawn_ship")
 	s.connect("fuel_changed", $HUD, "update_fuelbar")
 	s.connect("spawn_bullet", self, "spawn_bullet")
-	
+
 	add_child(s)

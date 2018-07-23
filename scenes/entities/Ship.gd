@@ -14,6 +14,7 @@ export (int) var max_land_angle = 30
 export (int) var max_fuel = 100
 export (int) var fuel = 100
 export (int) var fuel_per_second = 10
+var refuelling = null
 
 export (PackedScene) var Bullet
 
@@ -23,13 +24,12 @@ var new_position = null
 func _ready():
 	fuel = max_fuel
 	emit_signal('fuel_changed', fuel * 100 / max_fuel)
-	
+
 
 func rotate_ship(direction):
 
 	if fuel <= 0: 
-		return
-		
+		return		
 	angular_velocity = direction * rotation_speed
 
 
@@ -55,13 +55,19 @@ func _physics_process(delta):
 	if linear_velocity.length() > max_speed:
 		linear_velocity = linear_velocity.normalized() * max_speed		
 		
-	if Input.is_key_pressed(KEY_F):
-		refuel(20)
+	check_refuel()
+	
+	
+	
+func set_refuel_rate(amount):
+	refuelling = amount
 	
 			
-func refuel(amount):
-	fuel = clamp(fuel + amount, fuel + amount, max_fuel)
-	emit_signal('fuel_changed', fuel * 100 / max_fuel)
+func check_refuel():
+	if refuelling:
+		var new_fuel = fuel + (refuelling * get_physics_process_delta_time())
+		fuel = clamp(new_fuel, new_fuel, max_fuel)
+		emit_signal('fuel_changed', fuel * 100 / max_fuel)
 	
 			
 func thrust(delta):

@@ -115,7 +115,7 @@ linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = 0.1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Collision" ]
+_sections_unfolded = [ "Collision", "Visibility" ]
 thrust = 20
 max_speed = 400
 rotation_speed = 2
@@ -188,7 +188,6 @@ visible = false
 texture = ExtResource( 5 )
 vframes = 4
 hframes = 4
-frame = 15
 region_rect = Rect2( 0, 0, 64, 64 )
 _sections_unfolded = [ "Animation", "Region", "Visibility" ]
 
