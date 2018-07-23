@@ -11,7 +11,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 680.263, 8 )
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -78,7 +78,7 @@ shape = SubResource( 1 )
 
 [node name="RefuelPlatform" parent="." index="3" instance=ExtResource( 4 )]
 
-position = Vector2( 558.257, 710.915 )
+position = Vector2( 1138.26, 710.915 )
 _sections_unfolded = [ "Visibility", "Z Index" ]
 
 [node name="HUD" parent="." index="4" instance=ExtResource( 5 )]
