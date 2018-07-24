@@ -28,10 +28,9 @@ func _ready():
 
 func rotate_ship(direction):
 
-	if fuel <= 0: 
-		return		
+	if fuel <= 0: return		
 	angular_velocity = direction * rotation_speed
-
+	
 
 func _physics_process(delta):
 
@@ -42,23 +41,22 @@ func _physics_process(delta):
 	else:
 		rotate_ship(0)
 
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up"): 
 		thrust(delta)
 		
 	if Input.is_action_just_released("ui_up"):
 		$Flames.emitting = false
 		$RocketSound.stop()
 		
-	if Input.is_action_pressed("fire"):
+	if Input.is_action_pressed("fire"): 
 		shoot()
 
-	if linear_velocity.length() > max_speed:
+	if linear_velocity.length() > max_speed: 
 		linear_velocity = linear_velocity.normalized() * max_speed		
 		
 	check_refuel()
-	
-	
-	
+
+
 func set_refuel_rate(amount):
 	refuelling = amount
 	
@@ -82,7 +80,7 @@ func thrust(delta):
 		apply_impulse(Vector2(), Vector2(0, -thrust).rotated(rotation))
 		fuel -= fuel_per_second * delta
 		emit_signal('fuel_changed', fuel * 100 / max_fuel)
-		if $RocketSound.playing == false:
+		if $RocketSound.playing == false: 
 			$RocketSound.play()
 		$Flames.emitting = true
 			
@@ -98,12 +96,10 @@ func shoot():
 
 func land():
 	
-	if abs(linear_velocity.y) > ground_hit_velocity:
-		explode()
+	if abs(linear_velocity.y) > ground_hit_velocity: explode()
 
 	var angle_from_vertical = Vector2(-sin(rotation), -cos(rotation)).angle_to(Vector2(0, -1))
-	if abs(angle_from_vertical) > deg2rad(max_land_angle):
-		explode()	
+	if abs(angle_from_vertical) > deg2rad(max_land_angle): explode()	
 	
 func explode():
 	linear_velocity = Vector2(0, 0)
@@ -118,10 +114,10 @@ func _integrate_forces(state):
 
 	var xform = state.get_transform()
 	
-	if xform.origin.x > get_viewport().size.x:
+	if xform.origin.x > get_viewport().size.x: 
 		xform.origin.x = 0		
 
-	if xform.origin.x < 0:
+	if xform.origin.x < 0: 
 		xform.origin.x = get_viewport().size.x
 
 	if new_position:
@@ -135,7 +131,7 @@ func _on_Ship_body_entered(body):
 	
 	var body_name = body.get_name()
 	
-	if body_name == "Ground":
+	if body_name == "Ground": 
 		land()	
 
 		

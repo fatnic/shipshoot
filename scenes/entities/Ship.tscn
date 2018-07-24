@@ -94,7 +94,7 @@ tracks/0/keys = {
 "values": [ 0, 15 ]
 }
 
-[node name="Ship" type="RigidBody2D"]
+[node name="Ship" type="RigidBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
