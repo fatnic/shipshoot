@@ -102,6 +102,7 @@ func land():
 	if abs(angle_from_vertical) > deg2rad(max_land_angle): explode()	
 	
 func explode():
+	canshoot = false
 	linear_velocity = Vector2(0, 0)
 	$CollisionShape2D.disabled = true
 	$Sprite.visible = false

@@ -12,7 +12,7 @@ func spawn_bullet(bullet, _position, _direction):
 	
 func spawn_ship(_position):
 	var s = ship.instance()
-	s.new_position = _position
+	s.new_position = Vector2(_position)
 	
 	s.connect("dead", self, "spawn_ship")
 	s.connect("fuel_changed", $HUD, "update_fuelbar")
